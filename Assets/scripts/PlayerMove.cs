@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : NetworkBehaviour
 {
 
-    void Start()
+    public override void OnStartLocalPlayer()
     {
-        transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-        
+        GetComponent<MeshRenderer>().material.color = Random.ColorHSV(0,1, 1, 1, 1, 1);
+        transform.Translate(0f, 0.5f, 0f);
     }
 
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         var x = Input.GetAxis("Horizontal") * 0.1f;
         var z = Input.GetAxis("Vertical") * 0.1f;
 
